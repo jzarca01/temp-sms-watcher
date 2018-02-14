@@ -19,8 +19,8 @@ def main():
             if not arg:
                 m.country = "united-kingdom"
                 print "united-kingdom set as default, other options: are usa|canada|united-kingdom"
-            number = m.getNumber(m.country)
-            print number
+            number, countryCode = m.getNumber(m.country)
+            print countryCode, number
         elif opt in ("-C", "--check"):
             m.number = arg
             m.path = "info/{0}".format(m.number)

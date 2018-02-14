@@ -18,20 +18,17 @@ class generator:
 
     def getNumber(self,country):
         url = "{0}country/{1}".format(self.url, country)
-        print url
         r = requests.get(url)
         tree = html.fromstring(r.content)
         numbers = tree.xpath('//*[@class="row"]/a/text()')
         paths = tree.xpath('//*[@class="row"]/a/@href')
         selected = random.randint(0,len(paths))
         number = numbers[selected].split(" ")[0]
-
         self.path = paths[selected]
-        return number
+        return number, country
 
     def checkSMS(self,pattern):
         url = "{0}{1}/".format(self.url,self.path)
-        print url
         r = requests.get(url)
         tree = html.fromstring(r.content)
         sender = tree.xpath('//*[@class="msgTable"]/tbody/tr/td[1]/text()')
