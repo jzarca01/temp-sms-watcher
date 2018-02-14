@@ -13,7 +13,7 @@ def main():
         usage()                         
         sys.exit(2)                     
     for opt, arg in opts:
-        m = hs3x.generator()
+        m = smsreceivefree.generator()
         if opt in ("-c", "--country"):
             m.country = arg
             if not arg:
