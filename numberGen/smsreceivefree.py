@@ -15,10 +15,12 @@ class util:
 class generator:
     def __init__(self,):
         self.url = 'https://smsreceivefree.com/'
-
+        self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+        
     def getNumber(self,country):
         url = "{0}country/{1}".format(self.url, country)
-        r = requests.get(url)
+        
+        r = requests.get(url, headers=self.headers)
         tree = html.fromstring(r.content)
         numbers = tree.xpath('//*[@class="row"]/a/text()')
         paths = tree.xpath('//*[@class="row"]/a/@href')
@@ -29,10 +31,10 @@ class generator:
 
     def checkSMS(self,pattern):
         url = "{0}{1}/".format(self.url,self.path)
-        r = requests.get(url)
+        r = requests.get(url, headers=self.headers)
         tree = html.fromstring(r.content)
-        sender = tree.xpath('//*[@class="msgTable"]/tbody/tr/td[1]/text()')
-        message = tree.xpath('//*[@class="msgTable"]/tbody/tr/td[3]/text()')
+        sender = tree.xpath('//*[@class="messagesTable"]/tbody/tr/td[1]/text()')
+        message = tree.xpath('//*[@class="messagesTable"]/tbody/tr/td[3]/text()')
         for x in range(5):
             if pattern in message[x]:
                 return message[x]
